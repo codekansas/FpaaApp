@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">FtdiWeb</string>
+
+    <string-array name="section_titles">
+        <item>Device Information</item>
+        <item>Read and Write</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="save_button">Save</string>
+    <string name="default_title">Default Title</string>
+
+    <string-array name="baud_rate">
+        <item>300</item>
+        <item>600</item>
+        <item>1200</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>230400</item>
+        <item>460800</item>
+        <item>921600</item>
+        <item>1000000</item>
+        <item>2000000</item>
+        <item>3000000</item>
+        <item>4000000</item>
+        <item>5000000</item>
+        <item>6000000</item>
+        <item>7000000</item>
+        <item>8000000</item>
+        <item>9000000</item>
+        <item>10000000</item>
+        <item>11000000</item>
+        <item>12000000</item>
+    </string-array>
+
+    <string-array name="stop_bits">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="data_bits">
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="parity">
+        <item>none</item>
+        <item>odd</item>
+        <item>even</item>
+        <item >mark</item>
+        <item >space</item>
+    </string-array>
+
+    <string-array name="flow_control">
+        <item>none</item>
+        <item>CTS/RTS</item>
+        <item>DTR/DSR</item>
+        <item>XOFF/XON</item>
+    </string-array>
+
+    <string-array name="port_control">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="run_button_text">Run</string>
+    <string name="stop_button_text">Stop</string>
+    <string name="stop_bit">Stop Bit</string>
+    <string name="data_bit">Data Bit</string>
+    <string name="baud_rate">Baud Rate</string>
+    <string name="parity_bit">Parity Bit</string>
+    <string name="flow">Flow</string>
+    <string name="port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="run">Run</string>
+    <string name="read">Read</string>
+    <string name="write">Write</string>
+    <string name="bytes_to_write">Bytes to write</string>
+    <string name="read_and_write">Read and Write</string>
+
+</resources>
