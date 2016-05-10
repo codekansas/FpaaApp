@@ -1,4 +1,4 @@
-package hasler.fpaaapp.views;
+package hasler.fpaaapp.utils;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -144,37 +144,6 @@ public class Driver {
         }
     }
 
-    public void connect() {
-        int tmpPortNumber = openIndex + 1;
-
-        if (currentIndex != openIndex) {
-            if (ftDev == null) {
-                ftDev = d2xxManager.openByIndex(parentContext, openIndex);
-            } else {
-                synchronized (ftDev) {
-                    ftDev = d2xxManager.openByIndex(parentContext, openIndex);
-                }
-            }
-            uartConfigured = false;
-        } else {
-            Toast.makeText(parentContext, "Device port " + tmpPortNumber + " is already open", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (ftDev == null) {
-            Toast.makeText(parentContext, "Open device port (" + tmpPortNumber + ") no good, FT device is not available", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (ftDev.isOpen()) {
-            currentIndex = openIndex;
-
-            Toast.makeText(parentContext, "Open device port (" + tmpPortNumber + ") OK, device is being read", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(parentContext, "Open device port (" + tmpPortNumber + ") no good, FT device is not open", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void disconnect() {
         devCount = -1;
         currentIndex = -1;
@@ -308,16 +277,37 @@ public class Driver {
      * Connect to the device
      * @return Whether or not the device is connected
      */
-    protected boolean connectToDevice() {
-        if (!uartConfigured) {
-            setConfig(baudRate, dataBit, stopBit, parity, flowControl);
-        }
-        if (!uartConfigured) return false;
-
+    protected boolean connect() {
         if (devCount <= 0) {
             createDeviceList();
         }
         if (devCount <= 0) return false;
+
+        if (currentIndex != openIndex) {
+            if (ftDev == null) {
+                ftDev = d2xxManager.openByIndex(parentContext, openIndex);
+            } else {
+                synchronized (ftDev) {
+                    ftDev = d2xxManager.openByIndex(parentContext, openIndex);
+                }
+            }
+            uartConfigured = false;
+        }
+
+        if (ftDev == null) {
+            return false;
+        }
+
+        if (ftDev.isOpen()) {
+            currentIndex = openIndex;
+        } else {
+            return false;
+        }
+
+        if (!uartConfigured) {
+            setConfig(baudRate, dataBit, stopBit, parity, flowControl);
+        }
+        if (!uartConfigured) return false;
 
         sendSynchronizationFrame();
 
@@ -551,7 +541,7 @@ public class Driver {
      */
     public boolean writeMem(int start_address, byte... data) {
         // Perform a connection check
-        if (!connectToDevice()) return false;
+        if (!connect()) return false;
 
         // Does this get the program counter?
 
@@ -581,7 +571,7 @@ public class Driver {
      */
     public byte[] readMem(int start_address, int length) {
         // Perform a connection check
-        if (!connectToDevice()) return new byte[length * 2];;
+        if (!connect()) return new byte[length * 2];;
 
         // Perform a connection check
         if (!verifyCpuId()) { return new byte[length * 2]; }

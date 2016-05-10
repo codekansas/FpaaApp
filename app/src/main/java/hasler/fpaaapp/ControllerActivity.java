@@ -139,11 +139,11 @@ public class ControllerActivity extends AppCompatActivity
                 if (currentFragment instanceof HomeView) {
                     ((HomeView) currentFragment).update();
                 } else if (currentFragment instanceof ReadWriteView) {
-                    ((ReadWriteView) currentFragment).createDeviceList();
+                    ((ReadWriteView) currentFragment).onConnect();
                 }
             } else if (action.equals(UsbManager.ACTION_USB_ACCESSORY_DETACHED)) {
                 if (currentFragment instanceof ReadWriteView) {
-                    ((ReadWriteView) currentFragment).disconnect();
+                    ((ReadWriteView) currentFragment).onDisconnect();
                 }
             }
         } catch (Exception e) {
