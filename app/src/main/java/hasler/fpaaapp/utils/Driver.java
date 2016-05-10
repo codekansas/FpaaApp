@@ -277,7 +277,7 @@ public class Driver {
      * Connect to the device
      * @return Whether or not the device is connected
      */
-    protected boolean connect() {
+    public boolean connect() {
         if (devCount <= 0) {
             createDeviceList();
         }
