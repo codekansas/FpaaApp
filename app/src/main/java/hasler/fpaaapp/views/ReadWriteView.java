@@ -58,7 +58,7 @@ public class ReadWriteView extends Fragment {
                 driver.writeMem(0x5000, 0x1234, 0x4321, 0xACED, 0xFACE);
                 byte[] b = driver.readMem(0x5000, 4);
 
-                output.append("Read: " + Utils.join(b) + "\n");
+                output.append("Read: " + Utils.join(Utils.reverse(b)) + "\n");
             }
         });
 
