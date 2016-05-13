@@ -46,7 +46,7 @@ public class Driver {
 
     public Driver(ControllerActivity parentContext) {
         this.parentContext = parentContext;
-        d2xxManager = parentContext.d2xxManager;
+        d2xxManager = parentContext.getDeviceManager();
     }
 
     public void setConfig(int baud, byte dataBits, byte stopBits, byte parity, byte flowControl) {
