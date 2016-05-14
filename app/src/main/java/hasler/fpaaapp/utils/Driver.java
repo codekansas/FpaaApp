@@ -172,12 +172,12 @@ public class Driver {
         readComplete = false;
 
         ReadThread thread = new ReadThread();
-        thread.execute(length);
+        thread.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, length);
 
         // wait for the thread to complete
         long startTime = System.currentTimeMillis();
         while (!readComplete) {
-            if (System.currentTimeMillis() - startTime > 100) { // cancel after 100 milliseconds
+            if (System.currentTimeMillis() - startTime > 5000) { // cancel after 5 seconds
                 thread.cancel(false);
                 break;
             }
@@ -193,10 +193,11 @@ public class Driver {
 
     public boolean write(byte... outData) {
         if (!ftDev.isOpen()) {
+            Log.d(TAG, "FT Device is not open");
             return false;
         }
 
-        int result = ftDev.write(outData);
+        int result = ftDev.write(outData, outData.length, false);
 
         return result == outData.length;
     }
@@ -366,21 +367,10 @@ public class Driver {
      * @return Whether or not the data was programmed
      */
     public boolean programData(byte[] data) {
-
-        // Perform a connection check
-        if (!verifyCpuId()) {
+        if (!connect()) {
+            Log.d(TAG, "Failed to connect to the device while programming data");
             return false;
         }
-
-        getDevice();
-
-        // Perform a connection check again: This is actually pretty important
-        if (!verifyCpuId()) {
-            return false;
-        }
-
-        // Initialize break units: Maybe not so important, but it looks nice
-        initBreakUnits();
 
         // Number of bytes
         int byte_size = data.length;
@@ -391,15 +381,20 @@ public class Driver {
         // Write the program to memory
         int startAddress = 0x10000 - byte_size;
 
-        writeBurst(startAddress, data);
-        sleep(500);
+        writeMem(startAddress, data);
+
+        try {
+            Thread.sleep(byte_size / 4);
+        } catch (InterruptedException ignored) { }
 
         // Verify that the data was written correctly
         if (!verifyMemory(startAddress, data)) {
+            Log.d(TAG, "Verifying memory write failed");
             return false;
         }
 
         // Run the CPU
+        connect();
         int cpuCtlOrg = Utils.toInt(readRegister("CPU_CTL"));
         writeRegister("CPU_CTL", cpuCtlOrg | 0x02);
 
@@ -469,17 +464,16 @@ public class Driver {
      */
     protected boolean sendSynchronizationFrame() {
         // Send synchronization frame
-        write((byte) 0x80);
+        if (!write((byte) 0x80)) return false;
 
         try {
-            Thread.sleep(100);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             Log.e(TAG, e.getMessage());
         }
 
         // Send dummy frame in case the debug interface is already synchronized
-        write((byte) 0xC0);
-        return write((byte) 0x00);
+        return write((byte) 0xC0) && write((byte) 0x00);
     }
 
     /**
@@ -541,9 +535,10 @@ public class Driver {
      */
     public boolean writeMem(int start_address, byte... data) {
         // Perform a connection check
-        if (!connect()) return false;
-
-        // Does this get the program counter?
+        if (!connect()) {
+            Log.e(TAG, "Connection error while trying to write memory");
+            return false;
+        }
 
         haltCpu();
 
@@ -571,15 +566,10 @@ public class Driver {
      */
     public byte[] readMem(int start_address, int length) {
         // Perform a connection check
-        if (!connect()) return new byte[length * 2];;
-
-        // Perform a connection check
-        if (!verifyCpuId()) { return new byte[length * 2]; }
-        getDevice();
-        if (!verifyCpuId()) { return new byte[length * 2]; }
-
-        // Break units
-        initBreakUnits();
+        if (!connect()) {
+            Log.e(TAG, "Connection error while attempting to read memory");
+            return new byte[0];
+        };
 
         haltCpu();
 
@@ -620,10 +610,15 @@ public class Driver {
      * @return Whether data was successfully written
      */
     private boolean verifyMemory(int start_address, byte[] data) {
-        byte[] read_data = Utils.reverse(readBurst(start_address, data.length / 2));
-        if (read_data.length != data.length) return false;
-        for (int i = 0; i < read_data.length; i++) {
-            if (read_data[i] != data[i]) return false;
+        int len = Math.min(data.length / 2, 100);
+        byte[] read_data = readMem(start_address, len);
+
+        if (read_data.length == 0) return false;
+        for (int i = 0; i < len; i++) {
+            if (read_data[i] != data[i]) {
+                Log.e(TAG, "Error while verifying data at location " + i + ": Expected " + data[i] + ", got " + read_data[i]);
+                return false;
+            }
         }
         return true;
     }

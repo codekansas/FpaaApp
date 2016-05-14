@@ -10,7 +10,9 @@
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="339dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/progress_bar"
             android:layout_gravity="center_horizontal"
@@ -31,6 +33,12 @@
             android:text="Get Data"
             android:id="@+id/get_data_button"
             android:layout_gravity="center_horizontal" />
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_margin="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="400dip"
+            android:id="@+id/graph"/>
     </LinearLayout>
 
 </ScrollView>

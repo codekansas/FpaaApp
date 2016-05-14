@@ -2,53 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/exploded-aar/com.jjoe64/graphview/4.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/classes-f9321a49532f3c23c71bbea75485230edc977b7c.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-c86d017cfc7592d159a53bfaaa8220d6a378a1ad.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-6639b0a6acd3483371573d00b14cf6fa35912067.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/libs/d2xx.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="b6dc4a96ed7888af4bce553f6fbe9c44a5e7719f">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/d2xx-f6f4de372e8deedaa611eac4b1091a13b348ff5d.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/libs/gson-2.3.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/gson-2.3.1-ade0872cf96e4b02b76bc3b614aef875b1d62120.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/classes-60189028d6cadceaa593a745b22a65c9c85a4790.jar" />
-    </item>
-    <item
-        jar="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/libs/jtcl-2.7.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="83c4ac60dd6bbb93ec2f361e84c057885dae536d">
-        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/jtcl-2.7.0-2eda15a0e8a779494bb621a94c954ba073b15a34.jar" />
+        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
+        <dex dex="/Users/benjaminbolte/Documents/HaslerLab/FpaaApp/app/build/intermediates/pre-dexed/debug/classes-883c7c4144d0ec8922c66cba533c0f6040f42a6b.jar" />
     </item>
 
 </items>

@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.ftdi.j2xx.D2xxManager;
 
+import hasler.fpaaapp.utils.DriverFragment;
+import hasler.fpaaapp.views.DacAdcView;
 import hasler.fpaaapp.views.HomeView;
 import hasler.fpaaapp.views.ReadWriteView;
 
@@ -84,6 +86,9 @@ public class ControllerActivity extends AppCompatActivity
             case 1:
                 newFragment = ReadWriteView.newInstance();
                 break;
+            case 2:
+                newFragment = DacAdcView.newInstance();
+                break;
             default:
                 newFragment = HomeView.newInstance();
         }
@@ -109,12 +114,12 @@ public class ControllerActivity extends AppCompatActivity
             if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED)) {
                 if (currentFragment instanceof HomeView) {
                     ((HomeView) currentFragment).update();
-                } else if (currentFragment instanceof ReadWriteView) {
-                    ((ReadWriteView) currentFragment).onConnect();
+                } else if (currentFragment instanceof DriverFragment) {
+                    ((DriverFragment) currentFragment).onConnect();
                 }
             } else if (action.equals(UsbManager.ACTION_USB_ACCESSORY_DETACHED)) {
-                if (currentFragment instanceof ReadWriteView) {
-                    ((ReadWriteView) currentFragment).onDisconnect();
+                if (currentFragment instanceof DriverFragment) {
+                    ((DriverFragment) currentFragment).onDisconnect();
                 }
             }
         } catch (Exception e) {

@@ -4,6 +4,7 @@
     <string-array name="section_titles">
         <item>Device Information</item>
         <item>Read and Write</item>
+        <item>DAC ADC Example</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

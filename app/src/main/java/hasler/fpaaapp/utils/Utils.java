@@ -65,14 +65,14 @@ public class Utils {
      * @return The string of hex values
      */
     public static String join(byte... b) {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < b.length; i++) {
-            s += String.format("%02x ", (byte) b[i]);
+            s.append(String.format("%02x ", (byte) b[i]));
         }
         if (s.length() > 0) {
             return s.substring(0,  s.length() - 1);
         }
-        return s;
+        return s.toString();
     }
 
     /**
@@ -345,85 +345,6 @@ public class Utils {
             entry.size = (format == 32) ? buffer.getLong(offset + 20) & 0xffffffffL : buffer.getLong(offset + 32);
             entries[i] = entry;
         }
-
-        // Get the two relevant entries
-        ElfEntry tex = entries[1], vec = entries[2];
-
-        byte[] output_data = new byte[(int) (vec.address + vec.size) / 4];
-        for (int i = 0; i < tex.size; i++) {
-            output_data[i] = data[i + (int) tex.offset];
-        }
-        for (int i = 0; i < vec.size; i++) {
-            output_data[output_data.length - i - 1] = data[(int) (vec.offset + vec.size) - i - 1];
-        }
-
-        return output_data;
-    }
-
-    /**
-     * Compiles an ELF file to a binary file to write to the MSP430
-     * @param file_path The path to the file
-     * @return The binary data to write
-     * @throws IOException If the file couldn't be read
-     */
-    public static byte[] compileElf(String file_path) throws IOException {
-        // Make a new buffer to read data from the file
-        File file = new File(file_path);
-        RandomAccessFile raf = new RandomAccessFile(file, "r");
-        ByteBuffer buffer;
-
-        try {
-            buffer = raf.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, raf.length());
-        } finally {
-            raf.close();
-        }
-
-        // Read part of the header to get information about the file
-        byte[] ident = new byte[16];
-        buffer.get(ident);
-
-        // Check signing to make sure it is an ELF file
-        if (ident[0] != 0x7f || ident[1] != 'E' || ident[2] != 'L' || ident[3] != 'F') {
-            throw new IOException("Signing is invalid: This is not an ELF file");
-        }
-
-        // Get format (32 bit or 64 bit)
-        int format;
-        switch (ident[4]) {
-            case 1: format = 32; break;
-            case 2: format = 64; break;
-            default: throw new IOException("Invalid ELF class");
-        }
-
-        // Get endianess
-        switch (ident[5]) {
-            case 1: buffer.order(ByteOrder.LITTLE_ENDIAN); break;
-            case 2: buffer.order(ByteOrder.BIG_ENDIAN); break;
-            default: throw new IOException("Invalid ELF endian");
-        }
-
-        // For reading sections
-        int start = (format == 32) ? buffer.getInt(32) : buffer.getInt(40);
-        int entry_size = (format == 32) ? buffer.getShort(46) & 0xffff : buffer.getShort(58) & 0xffff;
-        int n_entries = (format == 32) ? buffer.getShort(48) & 0xffff : buffer.getShort(60) & 0xffff;
-
-        // Extract relevant information about entries
-        ElfEntry[] entries = new ElfEntry[n_entries];
-        for (int i = 0; i < n_entries; i++) {
-            int offset = start + i * entry_size;
-            ElfEntry entry = new ElfEntry();
-            entry.address = (format == 32) ? buffer.getLong(offset + 12) & 0xffffffffL : buffer.getLong(offset + 16);
-            entry.offset = (format == 32) ? buffer.getLong(offset + 16) & 0xffffffffL : buffer.getLong(offset + 24);
-            entry.size = (format == 32) ? buffer.getLong(offset + 20) & 0xffffffffL : buffer.getLong(offset + 32);
-            entries[i] = entry;
-        }
-
-        // Read the byte data from the file
-        File f = new File(file_path);
-        FileInputStream fin = new FileInputStream(f);
-        byte[] data = new byte[(int) f.length()];
-        fin.read(data);
-        fin.close();
 
         // Get the two relevant entries
         ElfEntry tex = entries[1], vec = entries[2];

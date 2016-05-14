@@ -1,7 +1,6 @@
 package hasler.fpaaapp.views;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import hasler.fpaaapp.ControllerActivity;
 import hasler.fpaaapp.R;
+import hasler.fpaaapp.utils.DriverFragment;
 
-public class ReadWriteView extends Fragment {
+public class ReadWriteView extends DriverFragment {
     private final String TAG = "ReadWriteView";
-
-    private ControllerActivity parentContext;
-    private hasler.fpaaapp.utils.Driver driver;
 
     public static ReadWriteView newInstance() {
         return new ReadWriteView();
@@ -43,15 +39,6 @@ public class ReadWriteView extends Fragment {
         }
 
         return new String(c);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Get parent context and instructions to execute
-        parentContext = (ControllerActivity) getActivity();
-        driver = new hasler.fpaaapp.utils.Driver(parentContext);
     }
 
 
@@ -146,25 +133,5 @@ public class ReadWriteView extends Fragment {
         });
 
         return view;
-    }
-
-    public void onConnect() {
-        driver.connect();
-    }
-
-    public void onDisconnect() {
-        driver.disconnect();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        onConnect();
-    }
-
-    @Override
-    public void onStop() {
-        onDisconnect();
-        super.onStop();
     }
 }
