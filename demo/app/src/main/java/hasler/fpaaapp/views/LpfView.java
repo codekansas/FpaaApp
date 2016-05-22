@@ -269,7 +269,7 @@ public class LpfView extends DriverFragment {
                         driver.sleep(40 * 1000);
                         updateProgressBar(100);
 
-                        long[] d = Utils.toInts(2, driver.readMem(0x6000, 100));
+                        long[] d = Utils.toInts(2, driver.readMem(0x6000, 1000));
                         List<long[]> sp = Utils.ffsplit(d);
 
                         // plot the input vector beside the generated vector
@@ -396,7 +396,7 @@ public class LpfView extends DriverFragment {
         protected boolean download(File file) {
             // Download the file if it doesn't exist
             if (!file.exists()) {
-                String url = "https://github.com/codekansas/designs/blob/master/lpf_meas.zip?raw=true";
+                String url = "https://github.com/codekansas/FpaaApp/blob/master/designs/lpf_meas_1.zip?raw=true";
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle("LPF");
                 request.setDescription("Downloading the LPF programming file");

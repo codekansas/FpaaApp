@@ -376,7 +376,7 @@ public class DacAdcView extends DriverFragment {
         protected boolean download(File file) {
             // Download the file if it doesn't exist
             if (!file.exists()) {
-                String url = "https://github.com/codekansas/designs/blob/master/dac_adc.zip?raw=true";
+                String url = "https://github.com/codekansas/FpaaApp/blob/master/designs/dac_adc_1.zip?raw=true";
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle("DAC ADC");
                 request.setDescription("Downloading the DAC ADC programming file");
