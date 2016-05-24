@@ -1,8 +1,6 @@
-package hasler.fpaaapp.utils;
-
 import android.util.Log;
 
-public abstract class AbstractDriver {
+public abstract class GenericDriver {
 	/* -----------------------------------------------------------
 	 * GenericDriver class: Generic programs for interfacing with
 	 * openMSP430. To use it, implement the read and write methods
@@ -102,6 +100,10 @@ public abstract class AbstractDriver {
         return true;
     }
 
+    /**
+     * Run CPU without loading data to memory (assumes a program is already written)
+     * @return
+     */
     public boolean runWithoutData() {
         sendSynchronizationFrame();
         if (!connectToDevice()) return false;
