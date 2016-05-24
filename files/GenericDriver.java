@@ -1,5 +1,3 @@
-import android.util.Log;
-
 public abstract class GenericDriver {
 	/* -----------------------------------------------------------
 	 * GenericDriver class: Generic programs for interfacing with
@@ -32,9 +30,7 @@ public abstract class GenericDriver {
     public void sleep(int n_millis) {
         try {
             Thread.sleep(n_millis);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
+        } catch (Exception ignored) { }
     }
 
     /**
@@ -44,7 +40,6 @@ public abstract class GenericDriver {
     protected boolean connectToDevice() {
         // Perform a connection check
         if (!verifyCpuId()) {
-            Log.e(TAG, "VERIFY CPU ID FAILED (1)");
             return false;
         }
 
@@ -52,7 +47,6 @@ public abstract class GenericDriver {
 
         // Perform another connection check: This is actually important
         if (!verifyCpuId()) {
-            Log.e(TAG, "VERIFY CPU ID FAILED (2)");
             return false;
         }
 
