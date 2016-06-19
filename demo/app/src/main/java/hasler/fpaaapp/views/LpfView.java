@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import hasler.fpaaapp.R;
+import hasler.fpaaapp.utils.Configuration;
 import hasler.fpaaapp.utils.DriverFragment;
 import hasler.fpaaapp.utils.Utils;
 
@@ -396,7 +397,7 @@ public class LpfView extends DriverFragment {
         protected boolean download(File file) {
             // Download the file if it doesn't exist
             if (!file.exists()) {
-                String url = "https://github.com/codekansas/FpaaApp/blob/master/designs/lpf_meas_1.zip?raw=true";
+                String url = Configuration.LPF_LOCATION;
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle("LPF");
                 request.setDescription("Downloading the LPF programming file");

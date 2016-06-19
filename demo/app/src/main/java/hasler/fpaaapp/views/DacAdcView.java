@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import hasler.fpaaapp.R;
+import hasler.fpaaapp.utils.Configuration;
 import hasler.fpaaapp.utils.DriverFragment;
 import hasler.fpaaapp.utils.Utils;
 
@@ -376,7 +377,7 @@ public class DacAdcView extends DriverFragment {
         protected boolean download(File file) {
             // Download the file if it doesn't exist
             if (!file.exists()) {
-                String url = "https://github.com/codekansas/FpaaApp/blob/master/designs/dac_adc_1.zip?raw=true";
+                String url = Configuration.DAC_ADC_LOCATION;
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                 request.setTitle("DAC ADC");
                 request.setDescription("Downloading the DAC ADC programming file");
